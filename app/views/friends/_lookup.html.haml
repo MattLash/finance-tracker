@@ -10,26 +10,27 @@
           %i.fa.fa-search  
           Look up a friend
   = render 'common/spinner'
-  - if @user 
-    - if @user.size > 0
+  - if @users 
+    - if @users.size > 0
+      %h2 Search Results
       #friend-lookup-results.well.results-block.col-md-10 
         %table.search-results-table.col-md-12    
           %tbody
-            @users.each do |user|
-              %td
-                %strong Name: 
-                = user.full_name
-              %td
-                %strong Email:
-                = user.email
-              %td
-                %strong Profile:
-                = link_to "Profile", user_path(user), class: "btn btn-xs btn-success"
-                - if current_user.not_friends_with?(user.id)
-                  = link_to "Add Friend", add_friend_path(user:current_user, friend: user), class: "btn btn-xs btn-success, method: :post 
-                - else
-                  %span.label.label-primary Your Friend!
-         
+            - @users.each do |user|
+              %tr
+                %td
+                  %strong Name: 
+                  = user.full_name
+                %td
+                  %strong Email:
+                  = user.email
+                %td
+                  %strong Profile:
+                  = link_to "Profile", user_path(user), class: "btn btn-xs btn-success"
+                  - if current_user.not_friends_with?(user.id)
+                    = link_to "Add Friend", add_friend_path(user:current_user, friend: user), class: "btn btn-xs btn-success", method: :post 
+                  - else
+                    %span.label.label-primary Your Friend!
     - else 
       %p.lead.col-md-12
         No Person Matches This Search Criteria
